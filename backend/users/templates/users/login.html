@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="bg-white border rounded-3 p-4">
+            <h1 class="h3 mb-2">{{ login_data.title }}</h1>
+            <p class="text-secondary mb-4">{{ login_data.description }}</p>
+            {% if login_role == 'client' %}
+                <div class="alert alert-info">
+                    L'inscription est reservee aux clients. Si vous avez deja un compte, connectez-vous directement.
+                </div>
+            {% endif %}
+            <div class="mb-3">
+                <a class="small" href="{% url 'users:login' %}">Changer le type de connexion</a>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                    </div>
+                {% endfor %}
+                {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+                <button class="btn btn-primary w-100" type="submit">Se connecter</button>
+            </form>
+            {% if login_role == 'client' %}
+                <p class="text-center text-secondary mt-3 mb-0">
+                    Pas encore de compte ? <a href="{% url 'users:register' %}">Inscription client</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

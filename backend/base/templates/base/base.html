@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TicketFlow{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'base/fontawesome/css/all.min.css' %}">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand fw-semibold" href="{% url 'tickets:dashboard' %}">TicketFlow</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Afficher la navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'base:home' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'tickets:dashboard' %}">Tickets</a></li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_support_admin %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'tickets:admin_dashboard' %}">Tableau admin</a></li>
+                        {% endif %}
+                        {% if not user.is_support_agent %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'tickets:create' %}">Nouveau ticket</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Profil</a></li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'users:logout' %}">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-light btn-sm" type="submit">Deconnexion</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Connexion</a></li>
+                        <li class="nav-item"><a class="btn btn-light btn-sm" href="{% url 'users:register' %}">Inscription</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{% static 'base/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Choix connexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="bg-white border rounded-3 p-4">
+            <h1 class="h3 mb-2">Connexion</h1>
+            <p class="text-secondary mb-4">Choisissez votre type de compte pour continuer.</p>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <a class="btn btn-outline-primary w-100 py-3" href="{% url 'users:role_login' 'client' %}">
+                        <i class="fa-solid fa-user me-2"></i>Client
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-outline-success w-100 py-3" href="{% url 'users:role_login' 'agent' %}">
+                        <i class="fa-solid fa-headset me-2"></i>Agent
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-outline-dark w-100 py-3" href="{% url 'users:role_login' 'admin' %}">
+                        <i class="fa-solid fa-user-shield me-2"></i>Admin
+                    </a>
+                </div>
+            </div>
+
+            <p class="text-center text-secondary mt-4 mb-0">
+                Nouveau client ? <a href="{% url 'users:register' %}">Inscription client</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

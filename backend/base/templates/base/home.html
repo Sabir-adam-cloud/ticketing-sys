@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
-</head>
-<body>
-    <h1>Bienvenue dans SimpliCulinary</h1>
-</body>
-</html>
+{% extends 'base/base.html' %}
+
+{% block title %}Accueil support{% endblock %}
+
+{% block content %}
+<section class="row align-items-center g-4 py-4">
+    <div class="col-lg-7">
+        <h1 class="display-5 fw-bold">Système de tickets/support</h1>
+        <p class="lead text-secondary">
+            Soumettez, suivez et resolvez les demandes client avec priorites, assignations,
+            historique, commentaires, pieces jointes et SLA.
+        </p>
+        <div class="d-flex gap-2">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{% url 'tickets:dashboard' %}">Ouvrir le tableau de bord</a>
+                <a class="btn btn-outline-primary btn-lg" href="{% url 'tickets:create' %}">Creer un ticket</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{% url 'users:login' %}">Connexion</a>
+                <a class="btn btn-outline-primary btn-lg" href="{% url 'users:register' %}">Inscription</a>
+            {% endif %}
+        </div>
+    </div>
+   
+</section>
+{% endblock %}

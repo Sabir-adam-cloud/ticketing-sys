@@ -1,0 +1,10 @@
+[07/May/2026 13:40:38] "GET /users/connexion/admin/ HTTP/1.1" 200 3118
+[07/May/2026 13:40:38,503] - Broken pipe from ('127.0.0.1', 60969)
+[07/May/2026 13:41:02] "GET /tickets/admin-dashboard/?agent=3 HTTP/1.1" 200 6970
+[07/May/2026 13:41:19] "GET /users/connexion/admin/ HTTP/1.1" 200 3643
+[07/May/2026 13:41:20] "GET /users/connexion/ HTTP/1.1" 200 3446
+[07/May/2026 13:41:20] "GET /static/base/fontawesome/webfonts/fa-solid-900.woff2 HTTP/1.1" 404 1946
+[07/May/2026 13:41:20] "GET /static/base/fontawesome/webfonts/fa-solid-900.ttf HTTP/1.1" 404 1940
+[07/May/2026 13:41:22] "GET / HTTP/1.1" 200 2823
+[07/May/2026 13:41:25] "POST /users/deconnexion/ HTTP/1.1" 302 0
+[07/May/2026 13:41:25] "GET / HTTP/1.1" 200 2288

@@ -3,8 +3,14 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class CustomUser(AbstractUser):
+    class Role(models.TextChoices):
+        ADMIN = 'admin', 'Administrateur'
+        AGENT = 'agent', 'Agent de support'
+        CLIENT = 'client', 'Client'
+
     phone = models.CharField(max_length=20, blank=True, verbose_name='Numéro')
     address = models.TextField(blank=True, verbose_name='Adresse')
+    role = models.CharField(max_length=20, choices=Role.choices, default=Role.CLIENT, verbose_name='Role')
 
     groups = models.ManyToManyField(
         Group,
@@ -29,3 +35,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    @property
+    def is_support_admin(self):
+        return self.is_superuser or self.role == self.Role.ADMIN
+
+    @property
+    def is_support_agent(self):
+        return self.is_staff or self.role in {self.Role.ADMIN, self.Role.AGENT}

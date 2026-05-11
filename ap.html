@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion - Travel Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(15,32,39,.35), rgba(15,32,39,.65)), url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80") center/cover;
+    display: grid;
+    place-items: center;
+    color: white;
+}
+.container {
+    width: min(930px, calc(100% - 32px));
+    min-height: 520px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+}
+.left {
+    background: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.45)), url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80") center/cover;
+    padding: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.left h1 { font-size: 38px; margin: 0 0 10px; }
+.left p { margin: 0; line-height: 1.7; max-width: 350px; }
+.right {
+    background: #0b3c6d;
+    padding: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+h2 { margin: 0 0 18px; text-align: center; }
+input {
+    width: 100%;
+    padding: 12px 13px;
+    margin: 9px 0;
+    border-radius: 8px;
+    border: none;
+    font: inherit;
+}
+.btn {
+    width: 100%;
+    border: none;
+    padding: 12px 14px;
+    margin-top: 10px;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    background: #ff9800;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn:hover { background: #e68900; }
+.google { background: white; color: #1b1b1b; }
+.or { text-align: center; margin: 14px 0 4px; font-size: 13px; opacity: .78; }
+.links { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; font-size: 14px; }
+a { color: white; }
+.flash {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+.disabled { opacity: .65; }
+@media (max-width: 760px) {
+    .container { grid-template-columns: 1fr; }
+    .left { min-height: 220px; }
+}
+</style>
+</head>
+<body>
+<main class="container">
+    <section class="left">
+        <h1>ENJOY THE WORLD</h1>
+        <p>Avec notre agence de voyage, transformez vos rêves en réalité !
+            Des plages paradisiaques aux villes les plus emblématiques, nous vous accompagnons dans chaque étape de votre aventure.</p>
+    </section>
+    <section class="right">
+        <h2>Connexion</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="Nom utilisateur ou email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button class="btn" type="submit">Continuer</button>
+        </form>
+        <div class="or">ou</div>
+        <a class="btn google {% if not google_enabled %}disabled{% endif %}" href="{{ url_for('google_login') }}">
+            Connexion avec Google
+        </a>
+        {% if not google_enabled %}
+            <div class="or">Google OAuth non configure. Ajoutez GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET.</div>
+        {% endif %}
+        <div class="links">
+            <a href="{{ url_for('register') }}">Creer un compte client</a>
+            <a href="{{ url_for('welcome') }}">Accueil</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>
